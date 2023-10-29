@@ -22,6 +22,7 @@ export const toastOnError = error => {
   }
 };
 
+
 export const isEmpty = value =>
   value === undefined ||
   value === null ||

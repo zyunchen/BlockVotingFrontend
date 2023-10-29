@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";  
+import { connect } from "react-redux";          
+import PropTypes from "prop-types"; 
+import { login } from "./LoginActions"; 
 import {
   Container,
   Button,
@@ -27,6 +31,7 @@ class Login extends Component {
       password: this.state.password
     };
     console.log("Login " + userData.username + " " + userData.password);
+    this.props.login(userData, "/dashboard");
   };
   render() {
     return (
@@ -70,4 +75,15 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, {
+  login
+})(withRouter(Login));

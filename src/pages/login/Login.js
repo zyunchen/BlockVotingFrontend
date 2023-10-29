@@ -37,6 +37,7 @@ class Login extends Component {
     return (
       <Container>
         <Row>
+          <Col></Col>
           <Col md="4">
             <h1>Login</h1>
             <Form>
@@ -64,11 +65,18 @@ class Login extends Component {
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
               </Form.Group>
             </Form>
+          </Col>
+          <Col></Col>
+        </Row>
+        <Row>
+          <Col></Col>
+          <Col md="4">
             <Button color="primary" onClick={this.onLoginClick}>Login</Button>
             <p className="mt-2">
               Don't have account? <Link to="/signup">Signup</Link>
             </p>
           </Col>
+          <Col></Col>
         </Row>
       </Container>
     );

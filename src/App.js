@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Home from "./pages/home/Home";
 import Signup from "./pages/signup/Signup";
 import Login from "./pages/login/Login";
+import InvoiceCreate from "./pages/invoice_create/InvoiceCreate";
+import InvoiceList from "./pages/invoice_list/InvoiceList";
 import Root from "./Root";
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -20,6 +22,9 @@ class App extends Component {
             <Route exact path="/home" component={Home} />
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
+            <Route path="/invoice_create" component={InvoiceCreate} />
+            <Route path="/invoice_list" component={InvoiceList} />
+
           </Switch>
       </Root>
 

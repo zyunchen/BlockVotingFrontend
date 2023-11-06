@@ -14,6 +14,13 @@ class Home extends Component {
         <p>
           <Link to="/signup">Sign up</Link>
         </p>
+        <p>
+          <Link to="/invoice_create">create a invoice</Link>
+        </p>
+        <p>
+          <Link to="/invoice_list">invoice list</Link>
+        </p>
+
       </Container>
     );
   }

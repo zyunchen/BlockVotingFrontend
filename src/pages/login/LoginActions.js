@@ -7,7 +7,7 @@ import { push } from "connected-react-router";
 
 export const login = (userData, redirectTo) => dispatch => {
   axios
-    .post('http://localhost:8888/login', {
+    .post('http://172.31.247.252:8888/login', {
     username: userData.username,
     password: userData.password
   }, {
@@ -17,14 +17,30 @@ export const login = (userData, redirectTo) => dispatch => {
 })    
     // .post("/api/v1/users/login", userData)
     .then(response => {
-      // const { auth_token } = response.data;
-      // setAxiosAuthToken(auth_token);
-      // dispatch(setToken(auth_token));
+      toast.success(
+        userData.username +
+          " login successfully!"
+      );
+      const { auth_token } = response.data;
+      setAxiosAuthToken(auth_token);
+      dispatch(setToken(auth_token));
       // dispatch(getCurrentUser(redirectTo));
+      dispatch(push("/home"));
     })
     .catch(error => {
+      if (error.resposne) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        toast.error(JSON.stringify(error.response.data));
+      } else if (error.message) {
+        // the error message is available,
+        // let's display it on error toast
+        toast.error(JSON.stringify(error.message));
+      } else {
+        // strange error, just show it
+        toast.error(JSON.stringify(error));
+      }
       dispatch(unsetCurrentUser());
-      toastOnError(error);
     });
 };
 
@@ -81,7 +97,7 @@ export const logout = () => dispatch => {
     .post("/api/v1/token/logout/")
     .then(response => {
       dispatch(unsetCurrentUser());
-      dispatch(push("/"));
+      dispatch(push("/home"));
       toast.success("Logout successful.");
     })
     .catch(error => {

@@ -9,7 +9,7 @@ import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8888";
+axios.defaults.baseURL = "http://172.31.247.252:8888";
 
 
 class App extends Component {

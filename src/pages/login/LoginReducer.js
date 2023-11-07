@@ -4,8 +4,8 @@ import { SET_TOKEN, SET_CURRENT_USER, UNSET_CURRENT_USER } from "./LoginTypes";
 // define the initial state of the signup store
 const initialState = {
   isAuthenticated: false,
-  user: {},
-  token: ""
+  username: "test",
+  uid:123
 };
 
 // define how action will change the state of the store

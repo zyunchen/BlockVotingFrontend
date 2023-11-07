@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import Navbar from "../../component/Navbar";
+
 class InvoiceList extends Component {
   render() {
     const { invoices } = this.props;
 
     return (
       <div>
+        <Navbar/>
         <h1>Invoice List</h1>
         <ul>
           {invoices.map((invoice) => (

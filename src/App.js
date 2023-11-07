@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Navbar from "./component/Navbar";
 import Home from "./pages/home/Home";
 import Signup from "./pages/signup/Signup";
 import Login from "./pages/login/Login";
@@ -19,12 +20,11 @@ class App extends Component {
        <Root>
           <ToastContainer hideProgressBar={true} newestOnTop={true} />
           <Switch>
-            <Route exact path="/home" component={Home} />
+            <Route exact path="/" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
+            <Route path="/home" component={Home} />
             <Route path="/invoice_create" component={InvoiceCreate} />
             <Route path="/invoice_list" component={InvoiceList} />
-
           </Switch>
       </Root>
 

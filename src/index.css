@@ -5,3 +5,12 @@
 .container {
 	margin-top: 20px;
 }
+
+.background-image {
+    background-image: url(https://img.freepik.com/premium-vector/isometric-unorganized-office-work-composition-with-flying-paper-sheets-laptops-human-characters-company-employees_1284-62619.jpg?w=740);
+    background-size: cover;
+    background-position: top;
+    min-height: 100%;
+    height: 100vh;
+    position: relative;
+}

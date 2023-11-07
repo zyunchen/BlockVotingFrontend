@@ -13,6 +13,8 @@ import {
   FormLabel
 } from "react-bootstrap";
 
+import Navbar from "../../component/Navbar";
+
 class InvoiceCreate extends Component {
   constructor(props) {
     super(props);
@@ -47,7 +49,8 @@ class InvoiceCreate extends Component {
 
   render() {
     return (
-      <Container>
+      <div>
+      <Navbar/>
         <Row className="justify-content-center mt-4">
           <Col md="6">
             <h2>Create Invoice</h2>
@@ -114,7 +117,7 @@ class InvoiceCreate extends Component {
             </Form>
           </Col>
         </Row>
-      </Container>
+      </div>
     );
   }
 }

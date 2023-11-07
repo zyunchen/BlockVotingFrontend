@@ -7,7 +7,7 @@ import { push } from "connected-react-router";
 
 export const login = (userData, redirectTo) => dispatch => {
   axios
-    .post('http://172.31.247.252:8888/login', {
+    .post('http://linux10603.dc.engr.scu.edu:8888/login', {
     username: userData.username,
     password: userData.password
   }, {
@@ -17,15 +17,20 @@ export const login = (userData, redirectTo) => dispatch => {
 })    
     // .post("/api/v1/users/login", userData)
     .then(response => {
-      toast.success(
-        userData.username +
-          " login successfully!"
-      );
-      const { auth_token } = response.data;
-      setAxiosAuthToken(auth_token);
-      dispatch(setToken(auth_token));
+      const code = response.data.code;
+      if (code === '0000') {
+        const user = {
+          username: response.data.data.username,
+          uid: response.data.data.UId
+        };
+        toast.success( user.username + " login successfully!" );
+        dispatch(setCurrentUser(user, redirectTo));
       // dispatch(getCurrentUser(redirectTo));
-      dispatch(push("/home"));
+      // dispatch(push(redirectTo));
+    } else if (code === '2003') {
+      // Invalid username or password
+      toast.error(JSON.stringify(response.data.msg));
+    }
     })
     .catch(error => {
       if (error.resposne) {
@@ -44,44 +49,45 @@ export const login = (userData, redirectTo) => dispatch => {
     });
 };
 
-export const getCurrentUser = redirectTo => dispatch => {
-  axios
-    .get("/api/v1/users/me/")
-    .then(response => {
-      const user = {
-        username: response.data.username,
-        email: response.data.email
-      };
-      dispatch(setCurrentUser(user, redirectTo));
-    })
-    .catch(error => {
-      dispatch(unsetCurrentUser());
-      toastOnError(error);
-    });
-};
+// export const getCurrentUser = redirectTo => dispatch => {
+//   axios
+//     .get("/api/v1/users/me/")
+//     .then(response => {
+//       const user = {
+//         username: response.data.username,
+//         email: response.data.email
+//       };
+//       dispatch(setCurrentUser(user, redirectTo));
+//     })
+//     .catch(error => {
+//       dispatch(unsetCurrentUser());
+//       toastOnError(error);
+//     });
+// };
 
 export const setCurrentUser = (user, redirectTo) => dispatch => {
-  localStorage.setItem("user", JSON.stringify(user));
+  // localStorage.setItem("user", JSON.stringify(user));
+  // console.log("user is  " + JSON.stringify(user));
+
   dispatch({
     type: SET_CURRENT_USER,
     payload: user
   });
 
-  console.log("set user" + redirectTo);
   if (redirectTo !== "") {
     dispatch(push(redirectTo));
   }
 };
 
 
-export const setToken = token => dispatch => {
-  setAxiosAuthToken(token);
-  localStorage.setItem("token", token);
-  dispatch({
-    type: SET_TOKEN,
-    payload: token
-  });
-};
+// export const setToken = token => dispatch => {
+//   setAxiosAuthToken(token);
+//   localStorage.setItem("token", token);
+//   dispatch({
+//     type: SET_TOKEN,
+//     payload: token
+//   });
+// };
 
 export const unsetCurrentUser = () => dispatch => {
   setAxiosAuthToken("");

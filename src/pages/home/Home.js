@@ -15,14 +15,15 @@ class Home extends Component {
     };
   }
   render() {
+    // console.log("props is  " + JSON.stringify(this.props));
     return (
       <Container>
         
         <h1>Welcome to Invoice Management System</h1>
         
-        {this.state.isAuthenticated ? (
+        {this.props.isAuthenticated ? (
           <div>
-            <p>You are logged in as {this.state.username}.</p>
+            <p>You are logged in as <b>{this.props.username}</b>.</p>
             <p>
           <Link to="/invoice_create">create a invoice</Link>
         </p>
@@ -48,15 +49,11 @@ class Home extends Component {
   }
 }
 
-Home.propTypes = {
-};
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.isAuthenticated,
-  username: state.username,
-  uid: state.uid
+  isAuthenticated: state.auth.isAuthenticated,
+  username: state.auth.user.username,
+  uid: state.auth.user.uid
 });
 
-export default connect(mapStateToProps, {
-  
-})(withRouter(Home));
+export default connect(mapStateToProps)(withRouter(Home));

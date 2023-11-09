@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const getInvoices = () => dispatch=> {
-  axios.get("http://localhost:8888/api/v1/Invoices")
+  axios.get("http://34.218.230.44:8888/api/v1/Invoices")
     .then((response) => {
       // 请求成功时，将返回的 Invoices 数据传递给 Redux Store
       const invoices = response.data;

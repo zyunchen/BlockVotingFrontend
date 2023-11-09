@@ -23,11 +23,10 @@ class Home extends Component {
       <Navbar/>
         <Container>
         
-          <h1>Welcome to Invoice Management System</h1>
+          <h1>Welcome! You are logged in as <b>{this.props.username}</b>.</h1>
           
           {this.props.isAuthenticated ? (
             <div>
-              <p>You are logged in as <b>{this.props.username}</b>.</p>
               <p>
             <Link to="/invoice_create">create a invoice</Link>
           </p>

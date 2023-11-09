@@ -10,7 +10,7 @@ import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import axios from "axios";
-axios.defaults.baseURL = "http://linux10603.dc.engr.scu.edu:8888";
+axios.defaults.baseURL = "http://34.218.230.44:8888";
 
 
 class App extends Component {
@@ -21,6 +21,7 @@ class App extends Component {
           <ToastContainer hideProgressBar={true} newestOnTop={true} />
           <Switch>
             <Route exact path="/" component={Login} />
+            <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route path="/home" component={Home} />
             <Route path="/invoice_create" component={InvoiceCreate} />

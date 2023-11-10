@@ -2,8 +2,6 @@ import {
   CREATE_INVOICE_SUBMITTED,
   CREATE_INVOICE_SUCCESS,
   CREATE_INVOICE_ERROR,
-  GET_INVOICE_SUCCESS,
-  EDIT_INVOICE_SUCCESS
 } from "./InvoiceActionTypes";
 
 const initialState = {
@@ -11,7 +9,6 @@ const initialState = {
   isSuccess: false,
   isError: false,
   errorData: null,
-  invoice: null,
 };
 
 export const invoiceReducer = (state = initialState, action) => {
@@ -39,19 +36,6 @@ export const invoiceReducer = (state = initialState, action) => {
         isSuccess: false,
         isError: true,
         errorData: action.errorData
-      };
-    case GET_INVOICE_SUCCESS:
-      return {
-        ...state,
-        invoice: action.data,
-      };
-    case EDIT_INVOICE_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-        isSuccess: true,
-        isError: false,
-        errorData: null
       };
     default:
       return state;

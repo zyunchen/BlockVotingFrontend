@@ -61,7 +61,7 @@ function Navbar() {
             <Link to="/payment" className={classes.link}>
               Payment Setting
             </Link>
-            <Link to="/logout" className={classes.link}>
+            <Link to="/login" className={classes.link}>
               Logout
             </Link>
           </div>

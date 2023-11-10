@@ -13,11 +13,6 @@ export const invoiceListReducer = (state = initialState, action) => {
         ...state,
         invoices: action.data,
       };
-
-      return {
-        ...state,
-        invoices: action.payload,
-      };
     default:
       return state;
   }

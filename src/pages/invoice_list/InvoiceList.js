@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getInvoices } from "./InvoiceListActions";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { push } from "connected-react-router";
 
 import Navbar from "../../component/Navbar";
 
@@ -12,6 +15,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Link } from 'react-router-dom';
+
 
 import { FaEdit, FaCreditCard, FaTrashAlt } from "react-icons/fa";
 
@@ -48,7 +53,22 @@ class InvoiceList extends Component {
 
     const handleDelete = (itemId) => {
       // Implement delete functionality
-      console.log(`Delete item with ID ${itemId}`);
+      axios
+        .delete(`http://34.218.230.44:8888/api/v1/Invoices/${itemId}`)
+        .then((response) => {
+          console.log(`Delete item with ID ${itemId}`);
+          window.location.reload();
+        })
+        .catch((error) => {
+          // 处理错误
+          if (error.response) {
+            toast.error(JSON.stringify(error.response.data));
+          } else if (error.message) {
+            toast.error(JSON.stringify(error.message));
+          } else {
+            toast.error(JSON.stringify(error));
+          }
+        });
     };
 
     return (
@@ -72,11 +92,11 @@ class InvoiceList extends Component {
             <TableBody>
               {invoices.map((invoice) => (
                 <TableRow
-                  key={invoice.id}
+                  key={invoice.invoiceId}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="invoice">
-                    {invoice.id}
+                    {invoice.invoiceId}
                   </TableCell>
                   <TableCell align="right">
                     {invoice.productDescription}
@@ -93,19 +113,17 @@ class InvoiceList extends Component {
                       className="button-container"
                       style={{ display: "flex", gap: "20px" }}
                     >
-                      <FaEdit
-                        size={30}
-                        onClick={() => handleEdit(invoice.id)}
-                        role="button"
-                      />
+                      <Link to={`/invoice/edit/${invoice.invoiceId}`}>
+                        <FaEdit size={30} />
+                      </Link>
                       <FaCreditCard
                         size={30}
-                        onClick={() => handlePay(invoice.id)}
+                        onClick={() => handlePay(invoice.invoiceId)}
                         role="button"
                       />
                       <FaTrashAlt
                         size={30}
-                        onClick={() => handleDelete(invoice.id)}
+                        onClick={() => handleDelete(invoice.invoiceId)}
                         role="button"
                       />
                     </div>

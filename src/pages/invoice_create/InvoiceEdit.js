@@ -119,11 +119,11 @@ class InvoiceEdit extends Component {
       .get(`/api/v1/customers/`)
       .then((response) => {
         console.log(response.data);
-        //this.setState((prevState) => ({
-        //  ...prevState,
-        //  customer: response.data,
-        //}));
-        this.state.customers = response.data;
+        this.setState((prevState) => ({
+          ...prevState,
+          customers: response.data,
+        }));
+        //this.state.customers = response.data;
         console.log(this.state);
         //toast.success("get customers successfully.");
         console.log("get customers successfully.");

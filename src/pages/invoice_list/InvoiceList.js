@@ -38,7 +38,6 @@ class InvoiceList extends Component {
   }
 
   render() {
-    console.log("this.props:" + JSON.stringify(this.props));
     const { invoices } = this.props;
     console.log("invoices-------hh-:" + JSON.stringify(invoices));
 
@@ -85,6 +84,7 @@ class InvoiceList extends Component {
                 <TableCell align="right">Quantity</TableCell>
                 <TableCell align="right">Price</TableCell>
                 <TableCell align="right">Tax</TableCell>
+                <TableCell align="right">Customer</TableCell>
                 <TableCell align="right">Create Date</TableCell>
                 <TableCell align="right">Modification Date</TableCell>
                 <TableCell align="right">Actions</TableCell>
@@ -105,6 +105,7 @@ class InvoiceList extends Component {
                   <TableCell align="right">{invoice.quantity}</TableCell>
                   <TableCell align="right">{invoice.price}</TableCell>
                   <TableCell align="right">{invoice.tax}</TableCell>
+                  <TableCell align="right">{invoice.customer.name}</TableCell>
                   <TableCell align="right">{invoice.creationDate}</TableCell>
                   <TableCell align="right">
                     {invoice.modificationDate}

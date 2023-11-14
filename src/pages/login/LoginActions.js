@@ -7,7 +7,7 @@ import { push } from "connected-react-router";
 
 export const login = (userData, redirectTo) => dispatch => {
   axios
-    .post('http://34.218.230.44:8888/login', {
+    .post('/login', {
     username: userData.username,
     password: userData.password
   }, {

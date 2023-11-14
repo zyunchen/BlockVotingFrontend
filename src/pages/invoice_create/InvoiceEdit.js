@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { editInvoice, getInvoicesById } from "./InvoiceActions";
+import { push } from "connected-react-router";
+
 import {
   Container,
   Row,
@@ -31,15 +32,21 @@ class InvoiceEdit extends Component {
       productDescription: "",
       quantity: 0,
       tax: 0,
+      customers: [],
     };
   }
   componentDidMount() {
+    this.getInvoiceById();
+    this.getCustomers();
+  }
+
+  getInvoiceById() {
     // 发送网络请求
     console.log(this.props);
     const { match } = this.props;
     const invoiceId = match.params.id;
     axios
-      .get(`http://34.218.230.44:8888/api/v1/Invoices/${invoiceId}`)
+      .get(`/api/v1/Invoices/${invoiceId}`)
       .then((response) => {
         console.log(response.data);
         this.setState(response.data.data);
@@ -76,12 +83,14 @@ class InvoiceEdit extends Component {
       tax,
     } = this.state;
 
+    console.log(createUser);
     const invoiceData = {
       productDescription,
       quantity,
       price,
       tax,
       customer,
+      createUserId: createUser.uid,
     };
 
     console.log("patch");
@@ -101,7 +110,36 @@ class InvoiceEdit extends Component {
           toast.error(JSON.stringify(error));
         }
       });
+    push("/invoice_list");
   };
+
+  getCustomers() {
+    // 发送网络请求
+    axios
+      .get(`/api/v1/customers/`)
+      .then((response) => {
+        console.log(response.data);
+        //this.setState((prevState) => ({
+        //  ...prevState,
+        //  customer: response.data,
+        //}));
+        this.state.customers = response.data;
+        console.log(this.state);
+        //toast.success("get customers successfully.");
+        console.log("get customers successfully.");
+      })
+      .catch((error) => {
+        // 处理错误
+        if (error.response) {
+          toast.error(JSON.stringify(error.response.data));
+        } else if (error.message) {
+          toast.error(JSON.stringify(error.message));
+        } else {
+          toast.error(JSON.stringify(error));
+        }
+      });
+    //console.log(this.state);
+  }
 
   render() {
     return (
@@ -152,18 +190,22 @@ class InvoiceEdit extends Component {
               </FormGroup>
 
               {/* Assuming customerId is a dropdown */}
-              <FormGroup controlId="customerId">
+              <FormGroup controlId="customer">
                 <FormLabel>Customer</FormLabel>
                 <FormControl
                   as="select"
-                  name="customerId"
-                  value={this.state.customerId}
+                  name="customer"
+                  value={this.state.customer}
                   onChange={this.onChange}
                 >
-                  <option value={this.state.customer}>1</option>
-                  <option value={2}>2</option>
-                  <option value={3}>3</option>
-                  {/* Add options for customers here */}
+                  {this.state.customers.map((customer) => (
+                    <option
+                      key={customer.customerId}
+                      value={customer.customerId}
+                    >
+                      {customer.name} {customer.email}
+                    </option>
+                  ))}
                 </FormControl>
               </FormGroup>
 

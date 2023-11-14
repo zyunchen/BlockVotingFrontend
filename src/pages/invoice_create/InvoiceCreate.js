@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { createInvoice } from "./InvoiceActions";
 import { createCustomer } from "./CustomerActions";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 import {
   Container,
@@ -12,13 +14,12 @@ import {
   Button,
   FormControl,
   FormGroup,
-  FormLabel
+  FormLabel,
 } from "react-bootstrap";
-import { Modal } from 'react-responsive-modal';
-import 'react-responsive-modal/styles.css';
+import { Modal } from "react-responsive-modal";
+import "react-responsive-modal/styles.css";
 import Navbar from "../../component/Navbar";
-import { Box } from '@mui/system';
-
+import { Box } from "@mui/system";
 
 class InvoiceCreate extends Component {
   constructor(props) {
@@ -26,31 +27,38 @@ class InvoiceCreate extends Component {
 
     this.state = {
       invoice_Details: {
-      productDescription: "",
-      quantity: 0,
-      price: 0,
-      tax: 0,
-      customerId: 1,
-      createUserId: 1
+        productDescription: "",
+        quantity: 0,
+        price: 0,
+        tax: 0,
+        customerId: 1,
+        createUserId: 1,
       },
       customer_Details: {
         customerId: 1,
         name: "",
-        email: ""
-      }
+        email: "",
+      },
+      customers: [],
     };
-
   }
 
-  onChangeInvoice = e => {
+  onChangeInvoice = (e) => {
     this.setState(({ invoice_Details }) => ({
-      invoice_Details: {...invoice_Details, [e.target.name]: e.target.value }
+      invoice_Details: { ...invoice_Details, [e.target.name]: e.target.value },
     }));
     //this.setState({ invoice_Details: {[e.target.name]: e.target.value }});
   };
 
   onCreateClick = () => {
-    const { productDescription, quantity, price, tax, customerId, createUserId } = this.state.invoice_Details;
+    const {
+      productDescription,
+      quantity,
+      price,
+      tax,
+      customerId,
+      createUserId,
+    } = this.state.invoice_Details;
 
     const invoiceData = {
       productDescription,
@@ -58,7 +66,7 @@ class InvoiceCreate extends Component {
       price,
       tax,
       customerId,
-      createUserId
+      createUserId,
     };
 
     console.log(invoiceData);
@@ -67,21 +75,24 @@ class InvoiceCreate extends Component {
   };
 
   modalState = {
-    openModal : false
-  }
+    openModal: false,
+  };
 
-  onOpenModal = e =>{
-    e.preventDefault()
-    this.setState({openModal : true})
-  }
+  onOpenModal = (e) => {
+    e.preventDefault();
+    this.setState({ openModal: true });
+  };
 
-  onCloseModal = ()=>{
-      this.setState({openModal : false})
-  }
+  onCloseModal = () => {
+    this.setState({ openModal: false });
+  };
 
-  onChangeCustomer = e => {
+  onChangeCustomer = (e) => {
     this.setState(({ customer_Details }) => ({
-      customer_Details: {...customer_Details, [e.target.name]: e.target.value }
+      customer_Details: {
+        ...customer_Details,
+        [e.target.name]: e.target.value,
+      },
     }));
   };
 
@@ -91,7 +102,7 @@ class InvoiceCreate extends Component {
     const customerData = {
       customerId,
       name,
-      email
+      email,
     };
 
     console.log(customerData);
@@ -99,10 +110,43 @@ class InvoiceCreate extends Component {
     this.props.createCustomer(customerData);
   };
 
+  getCustomers() {
+    // 发送网络请求
+    axios
+      .get(`/api/v1/customers/`)
+      .then((response) => {
+        console.log(response.data);
+        //this.setState((prevState) => ({
+        //  ...prevState,
+        //  customer: response.data,
+        //}));
+        this.state.customers = response.data;
+        //console.log(this.state);
+        //toast.success("get customers successfully.");
+        console.log("get customers successfully.");
+      })
+      .catch((error) => {
+        // 处理错误
+        if (error.response) {
+          toast.error(JSON.stringify(error.response.data));
+        } else if (error.message) {
+          toast.error(JSON.stringify(error.message));
+        } else {
+          toast.error(JSON.stringify(error));
+        }
+      });
+    //console.log(this.state);
+  }
+
+  componentDidMount() {
+    this.getCustomers();
+  }
+
   render() {
+    console.log("Rendering");
     return (
       <div>
-      <Navbar/>
+        <Navbar />
         <Row className="justify-content-center mt-4">
           <Col md="6">
             <h2>Create Invoice</h2>
@@ -156,10 +200,14 @@ class InvoiceCreate extends Component {
                   value={this.state.invoice_Details.customerId}
                   onChange={this.onChangeInvoice}
                 >
-                  <option value={this.state.invoice_Details.customerId}>1</option>
-                  <option value={2}>2</option>
-                  <option value={3}>3</option>
-                  {/* Add options for customers here */}
+                  {this.state.customers.map((customer) => (
+                    <option
+                      key={customer.customerId}
+                      value={customer.customerId}
+                    >
+                      {customer.name} {customer.email}
+                    </option>
+                  ))}
                 </FormControl>
               </FormGroup>
               <Box
@@ -172,42 +220,50 @@ class InvoiceCreate extends Component {
                 <Button variant="primary" onClick={this.onCreateClick}>
                   Create Invoice
                 </Button>
-                <Button variant="secondary" onClick={this.onOpenModal} style={{ marginLeft: "auto" }}>
+                <Button
+                  variant="secondary"
+                  onClick={this.onOpenModal}
+                  style={{ marginLeft: "auto" }}
+                >
                   Add Customer
                 </Button>
-                <Modal open={this.state.openModal} onClose={this.onCloseModal} center>
-                    <h1>Add a new customer</h1>
-                    
-                    <Form>
-                      <FormGroup controlId="customerName">
-                        <FormLabel>Customer Name</FormLabel>
-                        <FormControl
-                          type="text"
-                          name="name"
-                          value={this.state.customer_Details.name}
-                          onChange={this.onChangeCustomer}
-                        />
-                      </FormGroup>
-                      <FormGroup controlId="customerEmail">
-                        <FormLabel>Customer Email</FormLabel>
-                        <FormControl
-                          type="text"
-                          name="email"
-                          value={this.state.customer_Details.email}
-                          onChange={this.onChangeCustomer}
-                        />
-                      </FormGroup>
-                      <Button variant="primary" onClick={this.onCreateCustomerClick}>
-                        Create Customer
-                      </Button>
-                    </Form>
-                </Modal>   
+                <Modal
+                  open={this.state.openModal}
+                  onClose={this.onCloseModal}
+                  center
+                >
+                  <h1>Add a new customer</h1>
+
+                  <Form>
+                    <FormGroup controlId="customerName">
+                      <FormLabel>Customer Name</FormLabel>
+                      <FormControl
+                        type="text"
+                        name="name"
+                        value={this.state.customer_Details.name}
+                        onChange={this.onChangeCustomer}
+                      />
+                    </FormGroup>
+                    <FormGroup controlId="customerEmail">
+                      <FormLabel>Customer Email</FormLabel>
+                      <FormControl
+                        type="text"
+                        name="email"
+                        value={this.state.customer_Details.email}
+                        onChange={this.onChangeCustomer}
+                      />
+                    </FormGroup>
+                    <Button
+                      variant="primary"
+                      onClick={this.onCreateCustomerClick}
+                    >
+                      Create Customer
+                    </Button>
+                  </Form>
+                </Modal>
               </Box>
-              
             </Form>
           </Col>
-
-
         </Row>
       </div>
     );
@@ -216,8 +272,7 @@ class InvoiceCreate extends Component {
 
 InvoiceCreate.propTypes = {
   createInvoice: PropTypes.func.isRequired,
-  createCustomer: PropTypes.func.isRequired
+  createCustomer: PropTypes.func.isRequired,
 };
-
 
 export default connect(null, { createInvoice, createCustomer })(InvoiceCreate);

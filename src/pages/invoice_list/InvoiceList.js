@@ -23,21 +23,22 @@ import { FaEdit, FaCreditCard, FaTrashAlt } from "react-icons/fa";
 class InvoiceList extends Component {
   constructor(props) {
     super(props);
-    // this.state = store.getState()
-    // this.changeInputVal = this.changeInputVal.bind(this);
-    // this.addList = this.addList.bind(this);
-    // this.delClick = this.delClick.bind(this);
-    // // 让组件更新
-    // this.storeChange = this.storeChange.bind(this)  //转变this指向
-    // store.subscribe(this.storeChange) //订阅Redux的状态
+    this.state = {
+      isAuthenticated: false,
+      username: "",
+      uid: 0,
+    };
   }
 
   componentDidMount() {
     // 发送网络请求
-    this.props.getInvoices();
+    const uid = this.props.uid;
+    console.log("打印 uid 的值 是 " + uid);
+    this.props.getInvoices(uid);
   }
 
   render() {
+    console.log("this.props:" + JSON.stringify(this.props));
     const { invoices } = this.props;
     console.log("invoices-------hh-:" + JSON.stringify(invoices));
 
@@ -54,7 +55,7 @@ class InvoiceList extends Component {
     const handleDelete = (itemId) => {
       // Implement delete functionality
       axios
-        .delete(`http://34.218.230.44:8888/api/v1/Invoices/${itemId}`)
+        .delete(`/api/v1/Invoices/${itemId}`)
         .then((response) => {
           console.log(`Delete item with ID ${itemId}`);
           window.location.reload();
@@ -151,9 +152,9 @@ class InvoiceList extends Component {
   }
 }
 
-InvoiceList.propTypes = {
-  invoices: PropTypes.array.isRequired,
-};
+//InvoiceList.propTypes = {
+//  invoices: PropTypes.array.isRequired,
+//};
 
 // const mapStateToProps = (state) => ({
 //   invoices: state.invoices, // 注意这里的 state 结构要根据实际情况来调整
@@ -165,6 +166,9 @@ const mapStateToProps = (state) => {
   console.log("map state to props" + state.invoices); // 确认 state.invoices 是否有值
   return {
     invoices: state.invoice.invoices,
+    isAuthenticated: state.auth.isAuthenticated,
+    username: state.auth.username,
+    uid: state.auth.uid,
   };
 };
 

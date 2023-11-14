@@ -21,7 +21,8 @@ export const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload
+        username: action.payload.username,
+        uid: action.payload.uid,
       };
     case UNSET_CURRENT_USER:
       return initialState;

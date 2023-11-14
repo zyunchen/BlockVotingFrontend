@@ -55,8 +55,8 @@ class Home extends Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  username: state.auth.user.username,
-  uid: state.auth.user.uid,
+  username: state.auth.username,
+  uid: state.auth.uid,
 });
 
 export default connect(mapStateToProps)(withRouter(Home));

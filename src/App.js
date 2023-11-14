@@ -11,7 +11,7 @@ import { Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import axios from "axios";
-axios.defaults.baseURL = "http://34.218.230.44:8888";
+axios.defaults.baseURL = "http://ec2-35-89-139-214.us-west-2.compute.amazonaws.com:8888";
 
 class App extends Component {
   render() {

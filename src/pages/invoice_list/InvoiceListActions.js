@@ -2,8 +2,9 @@ import { GET_INVOICES_SUCCESS } from "./InvoiceListTypes";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const getInvoices = () => dispatch=> {
-  axios.get("http://34.218.230.44:8888/api/v1/Invoices")
+export const getInvoices = (uid) => dispatch=> {
+  //axios.get(`/api/v1/Invoices/${uid}`)
+  axios.get(`/api/v1/Invoices`)
     .then((response) => {
       // 请求成功时，将返回的 Invoices 数据传递给 Redux Store
       const invoices = response.data;

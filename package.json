@@ -2,6 +2,7 @@
   "name": "invocie-management-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://ec2-35-89-139-214.us-west-2.compute.amazonaws.com:8888",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",

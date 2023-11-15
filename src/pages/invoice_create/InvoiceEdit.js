@@ -17,7 +17,7 @@ import {
 } from "react-bootstrap";
 
 import Navbar from "../../component/Navbar";
-import { ConstructionOutlined } from "@mui/icons-material";
+import { ConstructionOutlined, ShieldTwoTone } from "@mui/icons-material";
 
 class InvoiceEdit extends Component {
   constructor(props) {
@@ -25,13 +25,13 @@ class InvoiceEdit extends Component {
     this.state = {
       createUser: null,
       creationDate: "",
-      customer: null,
       invoiceId: -1,
       modificationDate: "",
       price: 0,
       productDescription: "",
       quantity: 0,
       tax: 0,
+      customerId: -1,
       customers: [],
     };
   }
@@ -48,9 +48,10 @@ class InvoiceEdit extends Component {
     axios
       .get(`/api/v1/Invoices/${invoiceId}`)
       .then((response) => {
-        console.log(response.data);
+        console.log("response.data:" + response.data);
         this.setState(response.data.data);
-        console.log(this.state);
+        this.setState({...this.state, customerId: response.data.data.customer.customerId});
+        console.log("this.state:" + this.state);
         toast.success("get invoice successfully.");
       })
       .catch((error) => {
@@ -63,7 +64,6 @@ class InvoiceEdit extends Component {
           toast.error(JSON.stringify(error));
         }
       });
-    console.log(this.state);
   }
 
   onChange = (e) => {
@@ -74,13 +74,13 @@ class InvoiceEdit extends Component {
     const {
       createUser,
       creationDate,
-      customer,
       invoiceId,
       modificationDate,
       price,
       productDescription,
       quantity,
       tax,
+      customerId,
     } = this.state;
 
     console.log(createUser);
@@ -89,7 +89,7 @@ class InvoiceEdit extends Component {
       quantity,
       price,
       tax,
-      customer,
+      customerId,
       createUserId: createUser.uid,
     };
 
@@ -142,6 +142,8 @@ class InvoiceEdit extends Component {
   }
 
   render() {
+    
+    console.log(this.state);
     return (
       <div>
         <Navbar />
@@ -190,12 +192,12 @@ class InvoiceEdit extends Component {
               </FormGroup>
 
               {/* Assuming customerId is a dropdown */}
-              <FormGroup controlId="customer">
+              <FormGroup controlId="customerId">
                 <FormLabel>Customer</FormLabel>
                 <FormControl
                   as="select"
-                  name="customer"
-                  value={this.state.customer}
+                  name="customerId"
+                  value={this.state.customerId}
                   onChange={this.onChange}
                 >
                   {this.state.customers.map((customer) => (

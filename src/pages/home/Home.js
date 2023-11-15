@@ -25,7 +25,10 @@ class Home extends Component {
             Welcome! You are logged in as <b>{this.props.username}</b>.
           </h1>
 
-          {this.props.isAuthenticated ? (
+          <h2>
+            Please use above buttons to check invoice list or create new ones!
+          </h2>
+          {/* {this.props.isAuthenticated ? (
             <div>
               <p>
                 <Link to="/invoice_create">create a invoice</Link>
@@ -46,7 +49,7 @@ class Home extends Component {
                 <Link to="/signup">Sign up</Link>
               </p>
             </div>
-          )}
+          )} */}
         </Container>
       </div>
     );

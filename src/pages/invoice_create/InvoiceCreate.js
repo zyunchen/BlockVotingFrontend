@@ -5,6 +5,8 @@ import { createInvoice } from "./InvoiceActions";
 import { createCustomer } from "./CustomerActions";
 import { toast } from "react-toastify";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import {
   Container,
@@ -31,6 +33,7 @@ class InvoiceCreate extends Component {
         quantity: 0,
         price: 0,
         tax: 0,
+        dueDate: null,
         customerId: 1,
         createUserId: 1,
       },
@@ -50,21 +53,37 @@ class InvoiceCreate extends Component {
     //this.setState({ invoice_Details: {[e.target.name]: e.target.value }});
   };
 
+  onChangeDueDate = (e) => {
+    // console.log(this.state.invoice_Details.dueDate);
+    // console.log(e);
+    // this.setState(({ invoice_Details }) => ({
+    //   invoice_Details: { ...invoice_Details, dueDate: e},
+    // }));
+    this.state.invoice_Details.dueDate = e;
+    this.setState({ ...this.state });
+    // console.log(this.state.invoice_Details.dueDate);
+    // console.log(this.state);
+  };
+
   onCreateClick = () => {
     const {
       productDescription,
       quantity,
       price,
       tax,
+      dueDate,
       customerId,
       createUserId,
     } = this.state.invoice_Details;
+
+    const dueDateString = dueDate.toISOString();
 
     const invoiceData = {
       productDescription,
       quantity,
       price,
       tax,
+      dueDateString,
       customerId,
       createUserId,
     };
@@ -109,7 +128,9 @@ class InvoiceCreate extends Component {
 
     this.props.createCustomer(customerData);
 
-    this.getCustomers();
+    setTimeout(() => {
+      this.getCustomers();
+    }, 100);
   };
 
   getCustomers() {
@@ -183,13 +204,23 @@ class InvoiceCreate extends Component {
                 />
               </FormGroup>
 
-              <FormGroup controlId="tax">
+              {/* <FormGroup controlId="tax">
                 <FormLabel>Tax</FormLabel>
                 <FormControl
                   type="number"
                   name="tax"
                   value={this.state.invoice_Details.tax}
                   onChange={this.onChangeInvoice}
+                />
+              </FormGroup> */}
+              <FormGroup controlId="dueDate">
+                <FormLabel>dueDate</FormLabel>
+                <DatePicker
+                  name="dueDate"
+                  selected={this.state.invoice_Details.dueDate}
+                  onChange={this.onChangeDueDate}
+                  dateFormat="yyyy-MM-dd"
+                  className="form-control"
                 />
               </FormGroup>
 

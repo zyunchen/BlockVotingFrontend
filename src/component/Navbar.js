@@ -33,8 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 function Navbar() {
   const classes = useStyles();
   const theme = useTheme();
@@ -46,7 +44,6 @@ function Navbar() {
       <Toolbar>
         <Typography variant="h4" className={classes.logo}>
           Invoice Management
-          
         </Typography>
         {isMobile ? (
           <DrawerComponent />
@@ -58,9 +55,9 @@ function Navbar() {
             <Link to="/invoice_create" className={classes.link}>
               Create Invoice
             </Link>
-            <Link to="/payment" className={classes.link}>
+            {/* <Link to="/payment" className={classes.link}>
               Payment Setting
-            </Link>
+            </Link> */}
             <Link to="/login" className={classes.link}>
               Logout
             </Link>

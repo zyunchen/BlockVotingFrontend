@@ -18,6 +18,7 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 
 import { FaEdit, FaCreditCard, FaTrashAlt } from "react-icons/fa";
+import { AiOutlineEdit, AiOutlineDelete,AiOutlinePayCircle } from "react-icons/ai";
 
 class InvoiceList extends Component {
   constructor(props) {
@@ -71,10 +72,10 @@ class InvoiceList extends Component {
     };
 
     return (
-      <div>
+      <div >
         <Navbar />
-        <h1>Invoice List</h1>
-        <TableContainer component={Paper}>
+        <h4 style={{ paddingLeft: '10px' }}>Invoice List</h4>
+        <TableContainer component={Paper} style={{ width: 'auto', margin: '10px', padding: '10px' }} >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -111,24 +112,25 @@ class InvoiceList extends Component {
                   <TableCell align="right">
                     {invoice.modificationDate.split("T")[0]}
                   </TableCell>
+                  
                   {/* <TableCell align="right">{invoice.dueDate.split('T')[0]}</TableCell> */}
                   <TableCell align="right">{invoice.dueDate}</TableCell>
                   <TableCell align="right">{invoice.status}</TableCell>
                   <TableCell align="right">
                     <div
                       className="button-container"
-                      style={{ display: "flex", gap: "20px" }}
+                      style={{ display: "flex",justifyContent: "flex-end", gap: "10px"}}
                     >
                       <Link to={`/invoice/edit/${invoice.invoiceId}`}>
-                        <FaEdit size={30} />
+                        <AiOutlineEdit size={24} style={{ color: "black"}} />
                       </Link>
                       <Link to={`/invoice/payment/${invoice.invoiceId}`}>
-                        <FaCreditCard
-                          size={30}
+                        <AiOutlinePayCircle 
+                          size={24} style={{ color: "black"}}
                         />
                       </Link>
-                      <FaTrashAlt
-                        size={30}
+                      <AiOutlineDelete
+                        size={24}
                         onClick={() => handleDelete(invoice.invoiceId)}
                         role="button"
                       />

@@ -74,14 +74,16 @@ class InvoicePayment extends Component {
           price: response1.data.data.price,
           dueDate: response1.data.data.dueDate,
           status: response1.data.data.status,
-          totalPrice:
-            response1.data.data.quantity * response1.data.data.price +
-            response1.data.data.tax,
+          totalPrice: response1.data.data.price,
+          // totalPrice:
+          //   response1.data.data.quantity * response1.data.data.price +
+          //   response1.data.data.tax,
         });
-              this.setState({
-                ...this.state,
-                unpaidPrice: Math.round(this.state.totalPrice) - response1.data.data.paidAmount,
-              });
+        this.setState({
+          ...this.state,
+          unpaidPrice:
+            Math.round(this.state.totalPrice) - response1.data.data.paidAmount,
+        });
         console.log(this.state.totalPrice);
         // toast.success("get invoice successfully.");
         axios
@@ -170,6 +172,12 @@ class InvoicePayment extends Component {
     }
   };
 
+  getUTCDate(date) {
+    let d = new Date(date);
+    let utcd = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    return utcd.toISOString().split("T")[0];
+  }
+
   render() {
     return (
       <div>
@@ -228,7 +236,9 @@ class InvoicePayment extends Component {
                         {payment.paymentId}
                       </TableCell>
                       <TableCell align="right">{payment.amount}</TableCell>
-                      <TableCell align="right">{payment.paymentDate}</TableCell>
+                      <TableCell align="right">
+                        {this.getUTCDate(payment.creationDate)}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

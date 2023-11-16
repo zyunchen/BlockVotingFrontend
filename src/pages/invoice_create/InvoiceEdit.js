@@ -53,7 +53,11 @@ class InvoiceEdit extends Component {
       .then((response) => {
         console.log("response.data:" + JSON.stringify(response.data));
         console.log("dueDate:" + response.data.data.dueDate);
-        const dueDateObject = new Date(response.data.data.dueDate);
+        const d = new Date(response.data.data.dueDate);
+        const dueDateObject = new Date(
+          d.getTime() + d.getTimezoneOffset() * 60000
+        );
+        console.log("dueDate:" + dueDateObject);
         this.setState(response.data.data);
         this.setState({
           ...this.state,
@@ -105,7 +109,7 @@ class InvoiceEdit extends Component {
       customerId,
     } = this.state;
 
-    const dueDate= dueDateObject.toISOString();
+    const dueDate = dueDateObject.toISOString();
 
     console.log(createUser);
     const invoiceData = {

@@ -8,8 +8,6 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-
-
 import {
   Container,
   Row,
@@ -78,7 +76,7 @@ class InvoiceCreate extends Component {
       createUserId,
     } = this.state.invoice_Details;
 
-    const dueDate= dueDateObject.toISOString();
+    const dueDate = dueDateObject.toUTCString();
 
     const invoiceData = {
       productDescription,
@@ -174,8 +172,8 @@ class InvoiceCreate extends Component {
 
     console.log(customerData);
 
-    this.props.createCustomer(customerData);    
-    
+    this.props.createCustomer(customerData);
+
     this.getCustomers();
     this.onCloseModal();
   };
@@ -186,7 +184,7 @@ class InvoiceCreate extends Component {
 
   // componentDidUpdate(prevProps, prevState) {
   //   console.log(prevState.customers);
-  //   if (prevState.customers !== this.state.customers) { 
+  //   if (prevState.customers !== this.state.customers) {
   //     console.log("change customer!!");
   //     console.log(this.state.customers);
   //     this.render();

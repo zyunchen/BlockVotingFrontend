@@ -18,7 +18,11 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 
 import { FaEdit, FaCreditCard, FaTrashAlt } from "react-icons/fa";
-import { AiOutlineEdit, AiOutlineDelete,AiOutlinePayCircle } from "react-icons/ai";
+import {
+  AiOutlineEdit,
+  AiOutlineDelete,
+  AiOutlinePayCircle,
+} from "react-icons/ai";
 
 class InvoiceList extends Component {
   constructor(props) {
@@ -35,6 +39,12 @@ class InvoiceList extends Component {
     const uid = this.props.uid;
     console.log("打印 uid 的值 是 " + uid);
     this.props.getInvoices(uid);
+  }
+
+  getUTCDate(date) {
+    let d = new Date(date);
+    let utcd = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    return utcd.toISOString().split("T")[0];
   }
 
   render() {
@@ -72,10 +82,13 @@ class InvoiceList extends Component {
     };
 
     return (
-      <div >
+      <div>
         <Navbar />
-        <h4 style={{ paddingLeft: '10px' }}>Invoice List</h4>
-        <TableContainer component={Paper} style={{ width: 'auto', margin: '10px', padding: '10px' }} >
+        <h4 style={{ paddingLeft: "10px" }}>Invoice List</h4>
+        <TableContainer
+          component={Paper}
+          style={{ width: "auto", margin: "10px", padding: "10px" }}
+        >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
@@ -84,7 +97,7 @@ class InvoiceList extends Component {
                 <TableCell align="right">Customer</TableCell>
                 <TableCell align="right">Quantity</TableCell>
                 <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Total Price</TableCell>
+                {/* <TableCell align="right">Total Price</TableCell> */}
                 <TableCell align="right">Create Date</TableCell>
                 <TableCell align="right">Modification Date</TableCell>
                 <TableCell align="right">DueDate</TableCell>
@@ -108,29 +121,33 @@ class InvoiceList extends Component {
                   <TableCell align="right">{invoice.customer.name}</TableCell>
                   <TableCell align="right">{invoice.quantity}</TableCell>
                   <TableCell align="right">{invoice.price}</TableCell>
-                  <TableCell align="right">{Math.round(invoice.price * invoice.quantity)}</TableCell>
+                  {/* <TableCell align="right">{Math.round(invoice.price * invoice.quantity)}</TableCell> */}
                   <TableCell align="right">
-                    {invoice.creationDate.split("T")[0]}
+                    {this.getUTCDate(invoice.creationDate)}
                   </TableCell>
                   <TableCell align="right">
-                    {invoice.modificationDate.split("T")[0]}
+                    {this.getUTCDate(invoice.modificationDate)}
                   </TableCell>
-                  
-                  {/* <TableCell align="right">{invoice.dueDate.split('T')[0]}</TableCell> */}
+
                   <TableCell align="right">{invoice.dueDate}</TableCell>
                   <TableCell align="right">{invoice.paidAmount}</TableCell>
                   <TableCell align="right">{invoice.status}</TableCell>
                   <TableCell align="right">
                     <div
                       className="button-container"
-                      style={{ display: "flex",justifyContent: "flex-end", gap: "10px"}}
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        gap: "10px",
+                      }}
                     >
                       <Link to={`/invoice/edit/${invoice.invoiceId}`}>
-                        <AiOutlineEdit size={24} style={{ color: "black"}} />
+                        <AiOutlineEdit size={24} style={{ color: "black" }} />
                       </Link>
                       <Link to={`/invoice/payment/${invoice.invoiceId}`}>
-                        <AiOutlinePayCircle 
-                          size={24} style={{ color: "black"}}
+                        <AiOutlinePayCircle
+                          size={24}
+                          style={{ color: "black" }}
                         />
                       </Link>
                       <AiOutlineDelete

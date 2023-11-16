@@ -35,7 +35,7 @@ class InvoiceCreate extends Component {
         quantity: 0,
         price: 0,
         tax: 0,
-        dueDate: null,
+        dueDateObject: null,
         customerId: 1,
         createUserId: 1,
       },
@@ -61,7 +61,7 @@ class InvoiceCreate extends Component {
     // this.setState(({ invoice_Details }) => ({
     //   invoice_Details: { ...invoice_Details, dueDate: e},
     // }));
-    this.state.invoice_Details.dueDate = e;
+    this.state.invoice_Details.dueDateObject = e;
     this.setState({ ...this.state });
     // console.log(this.state.invoice_Details.dueDate);
     // console.log(this.state);
@@ -73,19 +73,19 @@ class InvoiceCreate extends Component {
       quantity,
       price,
       tax,
-      dueDate,
+      dueDateObject,
       customerId,
       createUserId,
     } = this.state.invoice_Details;
 
-    const dueDateString = dueDate.toISOString();
+    const dueDate= dueDateObject.toISOString();
 
     const invoiceData = {
       productDescription,
       quantity,
       price,
       tax,
-      dueDateString,
+      dueDate,
       customerId,
       createUserId,
     };
@@ -245,7 +245,7 @@ class InvoiceCreate extends Component {
                 <FormLabel>dueDate</FormLabel>
                 <DatePicker
                   name="dueDate"
-                  selected={this.state.invoice_Details.dueDate}
+                  selected={this.state.invoice_Details.dueDateObject}
                   onChange={this.onChangeDueDate}
                   dateFormat="yyyy-MM-dd"
                   className="form-control"

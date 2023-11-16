@@ -78,8 +78,12 @@ class InvoicePayment extends Component {
             response1.data.data.quantity * response1.data.data.price +
             response1.data.data.tax,
         });
+              this.setState({
+                ...this.state,
+                unpaidPrice: Math.round(this.state.totalPrice) - response1.data.data.paidAmount,
+              });
         console.log(this.state.totalPrice);
-        toast.success("get invoice successfully.");
+        // toast.success("get invoice successfully.");
         axios
           .get(`/api/v1/payments/${invoiceId}`)
           .then((response) => {
@@ -93,19 +97,19 @@ class InvoicePayment extends Component {
               });
             } else {
               this.setState({ ...this.state, payments: response.data });
-              const paidPrice = this.state.payments.reduce(
-                (accumulator, payment) => {
-                  return accumulator + payment.amount;
-                },
-                0
-              );
-              console.log("|||" + this.state.totalPrice + "|||" + paidPrice);
-              this.setState({
-                ...this.state,
-                unpaidPrice: this.state.totalPrice - paidPrice,
-              });
+              // const paidPrice = this.state.payments.reduce(
+              //   (accumulator, payment) => {
+              //     return accumulator + payment.amount;
+              //   },
+              //   0
+              // );
+              // console.log("|||" + this.state.totalPrice + "|||" + paidPrice);
+              // this.setState({
+              //   ...this.state,
+              //   unpaidPrice: this.state.totalPrice - paidPrice,
+              // });
               console.log("this.state:" + JSON.stringify(this.state));
-              toast.success("get payment successfully.");
+              // toast.success("get payment successfully.");
             }
           })
           .catch((error) => {

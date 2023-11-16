@@ -81,12 +81,14 @@ class InvoiceList extends Component {
               <TableRow>
                 <TableCell>ID</TableCell>
                 <TableCell align="right">Product Description</TableCell>
+                <TableCell align="right">Customer</TableCell>
                 <TableCell align="right">Quantity</TableCell>
                 <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Customer</TableCell>
+                <TableCell align="right">Total Price</TableCell>
                 <TableCell align="right">Create Date</TableCell>
                 <TableCell align="right">Modification Date</TableCell>
                 <TableCell align="right">DueDate</TableCell>
+                <TableCell align="right">Paid Amount</TableCell>
                 <TableCell align="right">Status</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
@@ -103,9 +105,10 @@ class InvoiceList extends Component {
                   <TableCell align="right">
                     {invoice.productDescription}
                   </TableCell>
+                  <TableCell align="right">{invoice.customer.name}</TableCell>
                   <TableCell align="right">{invoice.quantity}</TableCell>
                   <TableCell align="right">{invoice.price}</TableCell>
-                  <TableCell align="right">{invoice.customer.name}</TableCell>
+                  <TableCell align="right">{Math.round(invoice.price * invoice.quantity)}</TableCell>
                   <TableCell align="right">
                     {invoice.creationDate.split("T")[0]}
                   </TableCell>
@@ -115,6 +118,7 @@ class InvoiceList extends Component {
                   
                   {/* <TableCell align="right">{invoice.dueDate.split('T')[0]}</TableCell> */}
                   <TableCell align="right">{invoice.dueDate}</TableCell>
+                  <TableCell align="right">{invoice.paidAmount}</TableCell>
                   <TableCell align="right">{invoice.status}</TableCell>
                   <TableCell align="right">
                     <div

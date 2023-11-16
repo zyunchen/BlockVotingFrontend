@@ -33,7 +33,7 @@ class InvoiceEdit extends Component {
       productDescription: "",
       quantity: 0,
       tax: 0,
-      dueDate: null,
+      dueDateObject: null,
       customerId: -1,
       customers: [],
     };
@@ -51,11 +51,14 @@ class InvoiceEdit extends Component {
     axios
       .get(`/api/v1/Invoices/${invoiceId}`)
       .then((response) => {
-        console.log("response.data:" + response.data);
+        console.log("response.data:" + JSON.stringify(response.data));
+        console.log("dueDate:" + response.data.data.dueDate);
+        const dueDateObject = new Date(response.data.data.dueDate);
         this.setState(response.data.data);
         this.setState({
           ...this.state,
           customerId: response.data.data.customer.customerId,
+          dueDateObject: dueDateObject,
         });
         console.log("this.state:" + this.state);
         // toast.success("get invoice successfully.");
@@ -77,14 +80,14 @@ class InvoiceEdit extends Component {
   };
 
   onChangeDueDate = (e) => {
-    // console.log(this.state.invoice_Details.dueDate);
+    // console.log(this.state.invoice_Details.dueDateObject);
     // console.log(e);
     // this.setState(({ invoice_Details }) => ({
-    //   invoice_Details: { ...invoice_Details, dueDate: e},
+    //   invoice_Details: { ...invoice_Details, dueDateObject: e},
     // }));
-    this.state.dueDate = e;
+    this.state.dueDateObject = e;
     this.setState({ ...this.state });
-    // console.log(this.state.invoice_Details.dueDate);
+    // console.log(this.state.invoice_Details.dueDateObject);
     // console.log(this.state);
   };
 
@@ -98,11 +101,11 @@ class InvoiceEdit extends Component {
       productDescription,
       quantity,
       tax,
-      dueDate,
+      dueDateObject,
       customerId,
     } = this.state;
 
-    const dueDateString = dueDate.toISOString();
+    const dueDate= dueDateObject.toISOString();
 
     console.log(createUser);
     const invoiceData = {
@@ -110,7 +113,7 @@ class InvoiceEdit extends Component {
       quantity,
       price,
       tax,
-      dueDateString,
+      dueDate,
       customerId,
       createUserId: createUser.uid,
     };
@@ -206,7 +209,7 @@ class InvoiceEdit extends Component {
                 <FormLabel>dueDate</FormLabel>
                 <DatePicker
                   name="dueDate"
-                  selected={this.state.dueDate}
+                  selected={this.state.dueDateObject}
                   onChange={this.onChangeDueDate}
                   dateFormat="yyyy-MM-dd"
                   className="form-control"

@@ -108,7 +108,6 @@ class InvoiceList extends Component {
                   <TableCell align="right">
                     {invoice.creationDate.split("T")[0]}
                   </TableCell>
-                  <TableCell align="right">{invoice.status}</TableCell>
                   <TableCell align="right">
                     {invoice.modificationDate.split("T")[0]}
                   </TableCell>

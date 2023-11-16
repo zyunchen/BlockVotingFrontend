@@ -58,7 +58,7 @@ class InvoiceEdit extends Component {
           customerId: response.data.data.customer.customerId,
         });
         console.log("this.state:" + this.state);
-        toast.success("get invoice successfully.");
+        // toast.success("get invoice successfully.");
       })
       .catch((error) => {
         // 处理错误

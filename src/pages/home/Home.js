@@ -21,7 +21,7 @@ class Home extends Component {
               {this.props.isAuthenticated ? (
                 <div>
                 <Row>
-                  <Card.Text>You are logged in as <b>{this.props.username}</b>..</Card.Text>
+                  <Card.Text>You are logged in as <b>{this.props.username}</b>.</Card.Text>
                 </Row>
                 <Row></Row>
                 <Row></Row>

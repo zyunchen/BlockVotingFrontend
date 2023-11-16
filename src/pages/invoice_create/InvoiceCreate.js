@@ -8,6 +8,8 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+
+
 import {
   Container,
   Row,
@@ -114,6 +116,7 @@ class InvoiceCreate extends Component {
       },
     }));
   };
+<<<<<<< Updated upstream
 
   onCreateCustomerClick = () => {
     const { customerId, name, email } = this.state.customer_Details;
@@ -133,18 +136,21 @@ class InvoiceCreate extends Component {
     }, 100);
   };
 
+=======
+  
+>>>>>>> Stashed changes
   getCustomers() {
     // 发送网络请求
     axios
       .get(`/api/v1/customers/`)
       .then((response) => {
-        console.log(response.data);
+        console.log("get customers: ", response.data);
         this.setState((prevState) => ({
           ...prevState,
           customers: response.data,
         }));
         //this.state.customers = response.data;
-        console.log(this.state);
+        console.log("this state: ", this.state);
         //toast.success("get customers successfully.");
         console.log("get customers successfully.");
       })
@@ -158,12 +164,38 @@ class InvoiceCreate extends Component {
           toast.error(JSON.stringify(error));
         }
       });
-    //console.log(this.state);
+    console.log(this.state);
   }
+
+  onCreateCustomerClick = () => {
+    const { customerId, name, email } = this.state.customer_Details;
+
+    const customerData = {
+      customerId,
+      name,
+      email,
+    };
+
+    console.log(customerData);
+
+    this.props.createCustomer(customerData);    
+    
+    this.getCustomers();
+    this.onCloseModal();
+  };
 
   componentDidMount() {
     this.getCustomers();
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log(prevState.customers);
+  //   if (prevState.customers !== this.state.customers) { 
+  //     console.log("change customer!!");
+  //     console.log(this.state.customers);
+  //     this.render();
+  //   }
+  // }
 
   render() {
     console.log("Rendering");

@@ -85,7 +85,10 @@ class InvoiceList extends Component {
                 <TableCell align="right">Customer</TableCell>
                 <TableCell align="right">Create Date</TableCell>
                 <TableCell align="right">Modification Date</TableCell>
+<<<<<<< Updated upstream
                 <TableCell align="right">DueDate</TableCell>
+=======
+>>>>>>> Stashed changes
                 <TableCell align="right">Status</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
@@ -108,6 +111,7 @@ class InvoiceList extends Component {
                   <TableCell align="right">
                     {invoice.creationDate.split("T")[0]}
                   </TableCell>
+                  <TableCell align="right">{invoice.status}</TableCell>
                   <TableCell align="right">
                     {invoice.modificationDate.split("T")[0]}
                   </TableCell>
@@ -122,11 +126,11 @@ class InvoiceList extends Component {
                       <Link to={`/invoice/edit/${invoice.invoiceId}`}>
                         <FaEdit size={30} />
                       </Link>
-                      <FaCreditCard
-                        size={30}
-                        onClick={() => handlePay(invoice.invoiceId)}
-                        role="button"
-                      />
+                      <Link to={`/invoice/payment/${invoice.invoiceId}`}>
+                        <FaCreditCard
+                          size={30}
+                        />
+                      </Link>
                       <FaTrashAlt
                         size={30}
                         onClick={() => handleDelete(invoice.invoiceId)}

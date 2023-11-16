@@ -116,7 +116,6 @@ class InvoiceCreate extends Component {
       },
     }));
   };
-<<<<<<< Updated upstream
 
   onCreateCustomerClick = () => {
     const { customerId, name, email } = this.state.customer_Details;
@@ -136,9 +135,6 @@ class InvoiceCreate extends Component {
     }, 100);
   };
 
-=======
-  
->>>>>>> Stashed changes
   getCustomers() {
     // 发送网络请求
     axios

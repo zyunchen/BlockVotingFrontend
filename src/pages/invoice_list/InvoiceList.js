@@ -85,10 +85,7 @@ class InvoiceList extends Component {
                 <TableCell align="right">Customer</TableCell>
                 <TableCell align="right">Create Date</TableCell>
                 <TableCell align="right">Modification Date</TableCell>
-<<<<<<< Updated upstream
                 <TableCell align="right">DueDate</TableCell>
-=======
->>>>>>> Stashed changes
                 <TableCell align="right">Status</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>

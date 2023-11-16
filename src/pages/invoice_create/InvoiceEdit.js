@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { push } from "connected-react-router";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import {
   Container,
@@ -31,6 +33,7 @@ class InvoiceEdit extends Component {
       productDescription: "",
       quantity: 0,
       tax: 0,
+      dueDate: null,
       customerId: -1,
       customers: [],
     };
@@ -50,7 +53,10 @@ class InvoiceEdit extends Component {
       .then((response) => {
         console.log("response.data:" + response.data);
         this.setState(response.data.data);
-        this.setState({...this.state, customerId: response.data.data.customer.customerId});
+        this.setState({
+          ...this.state,
+          customerId: response.data.data.customer.customerId,
+        });
         console.log("this.state:" + this.state);
         toast.success("get invoice successfully.");
       })
@@ -70,6 +76,18 @@ class InvoiceEdit extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  onChangeDueDate = (e) => {
+    // console.log(this.state.invoice_Details.dueDate);
+    // console.log(e);
+    // this.setState(({ invoice_Details }) => ({
+    //   invoice_Details: { ...invoice_Details, dueDate: e},
+    // }));
+    this.state.dueDate = e;
+    this.setState({ ...this.state });
+    // console.log(this.state.invoice_Details.dueDate);
+    // console.log(this.state);
+  };
+
   onEditClick = () => {
     const {
       createUser,
@@ -80,8 +98,11 @@ class InvoiceEdit extends Component {
       productDescription,
       quantity,
       tax,
+      dueDate,
       customerId,
     } = this.state;
+
+    const dueDateString = dueDate.toISOString();
 
     console.log(createUser);
     const invoiceData = {
@@ -89,6 +110,7 @@ class InvoiceEdit extends Component {
       quantity,
       price,
       tax,
+      dueDateString,
       customerId,
       createUserId: createUser.uid,
     };
@@ -142,7 +164,6 @@ class InvoiceEdit extends Component {
   }
 
   render() {
-    
     console.log(this.state);
     return (
       <div>
@@ -181,7 +202,17 @@ class InvoiceEdit extends Component {
                 />
               </FormGroup>
 
-              <FormGroup controlId="tax">
+              <FormGroup controlId="dueDate">
+                <FormLabel>dueDate</FormLabel>
+                <DatePicker
+                  name="dueDate"
+                  selected={this.state.dueDate}
+                  onChange={this.onChangeDueDate}
+                  dateFormat="yyyy-MM-dd"
+                  className="form-control"
+                />
+              </FormGroup>
+              {/* <FormGroup controlId="tax">
                 <FormLabel>Tax</FormLabel>
                 <FormControl
                   type="number"
@@ -189,7 +220,7 @@ class InvoiceEdit extends Component {
                   value={this.state.tax}
                   onChange={this.onChange}
                 />
-              </FormGroup>
+              </FormGroup> */}
 
               {/* Assuming customerId is a dropdown */}
               <FormGroup controlId="customerId">

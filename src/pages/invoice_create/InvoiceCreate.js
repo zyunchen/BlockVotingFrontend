@@ -5,6 +5,10 @@ import { createInvoice } from "./InvoiceActions";
 import { createCustomer } from "./CustomerActions";
 import { toast } from "react-toastify";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+
 
 import {
   Container,
@@ -31,6 +35,7 @@ class InvoiceCreate extends Component {
         quantity: 0,
         price: 0,
         tax: 0,
+        dueDate: null,
         customerId: 1,
         createUserId: 1,
       },
@@ -50,21 +55,37 @@ class InvoiceCreate extends Component {
     //this.setState({ invoice_Details: {[e.target.name]: e.target.value }});
   };
 
+  onChangeDueDate = (e) => {
+    // console.log(this.state.invoice_Details.dueDate);
+    // console.log(e);
+    // this.setState(({ invoice_Details }) => ({
+    //   invoice_Details: { ...invoice_Details, dueDate: e},
+    // }));
+    this.state.invoice_Details.dueDate = e;
+    this.setState({ ...this.state });
+    // console.log(this.state.invoice_Details.dueDate);
+    // console.log(this.state);
+  };
+
   onCreateClick = () => {
     const {
       productDescription,
       quantity,
       price,
       tax,
+      dueDate,
       customerId,
       createUserId,
     } = this.state.invoice_Details;
+
+    const dueDateString = dueDate.toISOString();
 
     const invoiceData = {
       productDescription,
       quantity,
       price,
       tax,
+      dueDateString,
       customerId,
       createUserId,
     };
@@ -95,6 +116,7 @@ class InvoiceCreate extends Component {
       },
     }));
   };
+<<<<<<< Updated upstream
 
   onCreateCustomerClick = () => {
     const { customerId, name, email } = this.state.customer_Details;
@@ -109,21 +131,26 @@ class InvoiceCreate extends Component {
 
     this.props.createCustomer(customerData);
 
-    this.getCustomers();
+    setTimeout(() => {
+      this.getCustomers();
+    }, 100);
   };
 
+=======
+  
+>>>>>>> Stashed changes
   getCustomers() {
     // 发送网络请求
     axios
       .get(`/api/v1/customers/`)
       .then((response) => {
-        console.log(response.data);
+        console.log("get customers: ", response.data);
         this.setState((prevState) => ({
           ...prevState,
           customers: response.data,
         }));
         //this.state.customers = response.data;
-        console.log(this.state);
+        console.log("this state: ", this.state);
         //toast.success("get customers successfully.");
         console.log("get customers successfully.");
       })
@@ -137,12 +164,38 @@ class InvoiceCreate extends Component {
           toast.error(JSON.stringify(error));
         }
       });
-    //console.log(this.state);
+    console.log(this.state);
   }
+
+  onCreateCustomerClick = () => {
+    const { customerId, name, email } = this.state.customer_Details;
+
+    const customerData = {
+      customerId,
+      name,
+      email,
+    };
+
+    console.log(customerData);
+
+    this.props.createCustomer(customerData);    
+    
+    this.getCustomers();
+    this.onCloseModal();
+  };
 
   componentDidMount() {
     this.getCustomers();
   }
+
+  // componentDidUpdate(prevProps, prevState) {
+  //   console.log(prevState.customers);
+  //   if (prevState.customers !== this.state.customers) { 
+  //     console.log("change customer!!");
+  //     console.log(this.state.customers);
+  //     this.render();
+  //   }
+  // }
 
   render() {
     console.log("Rendering");
@@ -183,13 +236,23 @@ class InvoiceCreate extends Component {
                 />
               </FormGroup>
 
-              <FormGroup controlId="tax">
+              {/* <FormGroup controlId="tax">
                 <FormLabel>Tax</FormLabel>
                 <FormControl
                   type="number"
                   name="tax"
                   value={this.state.invoice_Details.tax}
                   onChange={this.onChangeInvoice}
+                />
+              </FormGroup> */}
+              <FormGroup controlId="dueDate">
+                <FormLabel>dueDate</FormLabel>
+                <DatePicker
+                  name="dueDate"
+                  selected={this.state.invoice_Details.dueDate}
+                  onChange={this.onChangeDueDate}
+                  dateFormat="yyyy-MM-dd"
+                  className="form-control"
                 />
               </FormGroup>
 

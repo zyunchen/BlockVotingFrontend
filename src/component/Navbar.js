@@ -24,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
     color: "white",
-    fontSize: "20px",
-    marginLeft: theme.spacing(20),
+    fontSize: "16px",
+    marginLeft: theme.spacing(5),
     "&:hover": {
-      color: "yellow",
-      borderBottom: "1px solid white",
+      backgroundColor: "white",
+      color: "#3f51b5"
     },
   },
 }));
@@ -42,7 +42,7 @@ function Navbar() {
     <AppBar position="sticky">
       <CssBaseline />
       <Toolbar>
-        <Typography variant="h4" className={classes.logo}>
+        <Typography variant="h5" className={classes.logo}>
           Invoice Management
         </Typography>
         {isMobile ? (

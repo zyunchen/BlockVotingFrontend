@@ -1,55 +1,80 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
+import Button from 'react-bootstrap/Button';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 import Navbar from "../../component/Navbar";
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAuthenticated: false,
-      username: "",
-      uid: 0,
-    };
-  }
   render() {
-    // console.log("props is  " + JSON.stringify(this.props));
     return (
       <div>
         <Navbar />
         <Container>
-          <h1>
-            Welcome! You are logged in as <b>{this.props.username}</b>.
-          </h1>
+          <Card>
+            <Card.Body>
+              <Card.Title>Welcome!</Card.Title>
+              {this.props.isAuthenticated ? (
+                <div>
+                <Row>
+                  <Card.Text>You are logged in as <b>{this.props.username}</b>..</Card.Text>
+                </Row>
+                <Row></Row>
+                <Row></Row>
+                <Row></Row>
+                <Row></Row>
 
-          <h2>
-            Please use above buttons to check invoice list or create new ones!
-          </h2>
-          {/* {this.props.isAuthenticated ? (
-            <div>
-              <p>
-                <Link to="/invoice_create">create a invoice</Link>
-              </p>
-              <p>
-                <Link to="/invoice_list">invoice list</Link>
-              </p>
-            </div>
-          ) : (
-            <div>
-              <p>
-                You are not logged in. Use following link to login or signup!
-              </p>
-              <p>
-                <Link to="/">Login</Link>
-              </p>
-              <p>
-                <Link to="/signup">Sign up</Link>
-              </p>
-            </div>
-          )} */}
+                <Row>
+                  <Col>
+                    <Button variant="outline-primary" href="/invoice_create">Create an Invoice</Button>
+                  </Col>
+                  <Col>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <Button variant="outline-primary" href="/invoice_list">Show all the invoices</Button>
+                  </Col>
+                  <Col>
+                  </Col>
+                </Row>
+
+                </div>
+              ) : (
+                <div>
+                <Row>
+                  <Card.Text>Please login first or signup new account.</Card.Text>
+                </Row>
+                <Row></Row>
+                <Row></Row>
+                <Row></Row>
+                <Row></Row>
+
+                <Row>
+                  <Col>
+                    <Button variant="outline-primary" href="/">Login</Button>
+                  </Col>
+                  <Col>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <Button variant="outline-primary" href="/signup">Sign up</Button>
+                  </Col>
+                  <Col>
+                  </Col>
+                </Row>
+
+                </div>
+              )}
+            </Card.Body>
+          </Card>
         </Container>
       </div>
     );

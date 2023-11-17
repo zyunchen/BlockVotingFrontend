@@ -198,39 +198,45 @@ class InvoiceCreate extends Component {
         <Navbar />
         <Row className="justify-content-center mt-4">
           <Col md="6">
-            <h2>Create Invoice</h2>
+            <h3>Create Invoice</h3>
             <Form>
-              <FormGroup controlId="productDescription">
-                <FormLabel>Product Description</FormLabel>
+              <FormGroup as={Row} className="mb-3" controlId="productDescription">
+                <FormLabel column>Product Description</FormLabel>
+              <Col md ="9">
                 <FormControl
                   type="text"
                   name="productDescription"
                   value={this.state.invoice_Details.productDescription}
                   onChange={this.onChangeInvoice}
                 />
+              </Col>
               </FormGroup>
 
-              <FormGroup controlId="quantity">
-                <FormLabel>Quantity</FormLabel>
+              <FormGroup as={Row} className="mb-3" controlId="quantity">
+                <FormLabel column>Quantity</FormLabel>
+                <Col md ="9">
                 <FormControl
                   type="number"
                   name="quantity"
                   value={this.state.invoice_Details.quantity}
                   onChange={this.onChangeInvoice}
                 />
+                </Col>
               </FormGroup>
 
-              <FormGroup controlId="price">
-                <FormLabel>Price</FormLabel>
+              <FormGroup as={Row} className="mb-3" controlId="price">
+                <FormLabel column algin="right">Price</FormLabel>
+                <Col md ="9">
                 <FormControl
                   type="number"
                   name="price"
                   value={this.state.invoice_Details.price}
                   onChange={this.onChangeInvoice}
                 />
+                </Col>
               </FormGroup>
 
-              {/* <FormGroup controlId="tax">
+              {/* <FormGroup as={Row} className="mb-3" controlId="tax">
                 <FormLabel>Tax</FormLabel>
                 <FormControl
                   type="number"
@@ -239,8 +245,9 @@ class InvoiceCreate extends Component {
                   onChange={this.onChangeInvoice}
                 />
               </FormGroup> */}
-              <FormGroup controlId="dueDate">
-                <FormLabel>dueDate</FormLabel>
+              <FormGroup as={Row} className="mb-3" controlId="dueDate">
+                <FormLabel column>dueDate</FormLabel>
+                <Col md ="9">
                 <DatePicker
                   name="dueDate"
                   selected={this.state.invoice_Details.dueDateObject}
@@ -248,11 +255,13 @@ class InvoiceCreate extends Component {
                   dateFormat="yyyy-MM-dd"
                   className="form-control"
                 />
+                </Col>
               </FormGroup>
 
               {/* Assuming customerId is a dropdown */}
-              <FormGroup controlId="customerId">
-                <FormLabel>Customer</FormLabel>
+              <FormGroup as={Row} className="mb-3"  controlId="customerId">
+                <FormLabel column>Customer</FormLabel>
+                <Col md ="6">
                 <FormControl
                   as="select"
                   name="customerId"
@@ -268,7 +277,22 @@ class InvoiceCreate extends Component {
                     </option>
                   ))}
                 </FormControl>
+                </Col>
+                <Col md ="3" className="d-flex">
+                <Button
+                  variant="outline-primary"
+                  onClick={this.onOpenModal}
+                  style={{ marginLeft: "auto" }}
+                >
+                  Add Customer
+                </Button>
+                </Col>
               </FormGroup>
+              <Row>
+                <Button variant="primary" onClick={this.onCreateClick}>
+                  Create Invoice
+                </Button>
+              </Row>
               <Box
                 component="span"
                 m={1}
@@ -276,50 +300,59 @@ class InvoiceCreate extends Component {
                 justifyContent="space-between"
                 alignItems="center"
               >
-                <Button variant="primary" onClick={this.onCreateClick}>
-                  Create Invoice
-                </Button>
-                <Button
-                  variant="secondary"
-                  onClick={this.onOpenModal}
-                  style={{ marginLeft: "auto" }}
-                >
-                  Add Customer
-                </Button>
                 <Modal
                   open={this.state.openModal}
                   onClose={this.onCloseModal}
                   center
-                >
-                  <h1>Add a new customer</h1>
+                  classNames={{
+                    overlay: 'custom-overlay',
+                    modal: 'custom-modal',
+                  }}
 
-                  <Form>
-                    <FormGroup controlId="customerName">
-                      <FormLabel>Customer Name</FormLabel>
-                      <FormControl
-                        type="text"
-                        name="name"
-                        value={this.state.customer_Details.name}
-                        onChange={this.onChangeCustomer}
-                      />
-                    </FormGroup>
-                    <FormGroup controlId="customerEmail">
-                      <FormLabel>Customer Email</FormLabel>
-                      <FormControl
-                        type="text"
-                        name="email"
-                        value={this.state.customer_Details.email}
-                        onChange={this.onChangeCustomer}
-                      />
-                    </FormGroup>
-                    <Button
-                      variant="primary"
-                      onClick={this.onCreateCustomerClick}
-                    >
-                      Create Customer
-                    </Button>
-                  </Form>
+                >
+                  <div style={{ textAlign: 'center', padding: '20px', width: '500px', backgroundColor: '#fff', borderRadius: '8px' }}>
+                    <h5>Add a New Customer</h5>
+                    <Row>
+                    </Row>
+                    <Row>
+                    </Row>
+                    <Row>
+                    </Row>
+                    <Form>
+                      <FormGroup as={Row}controlId="customerName">
+                        <FormLabel column>Customer Name</FormLabel>
+                        <Col md="8">
+                        <FormControl
+                          type="text"
+                          name="name"
+                          value={this.state.customer_Details.name}
+                          onChange={this.onChangeCustomer}
+                        />
+                        </Col>
+                      </FormGroup>
+                      <FormGroup as={Row} controlId="customerEmail">
+                        <FormLabel column>Customer Email</FormLabel>
+                        <Col md="8">
+                        <FormControl
+                          type="text"
+                          name="email"
+                          value={this.state.customer_Details.email}
+                          onChange={this.onChangeCustomer}
+                        />
+                        </Col>
+                      </FormGroup>
+                      <Row>
+                      <Button
+                        variant="primary"
+                        onClick={this.onCreateCustomerClick}
+                      >
+                        Create Customer
+                      </Button>
+                      </Row>
+                    </Form>
+                  </div>
                 </Modal>
+
               </Box>
             </Form>
           </Col>

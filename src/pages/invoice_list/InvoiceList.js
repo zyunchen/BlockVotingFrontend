@@ -142,16 +142,16 @@ class InvoiceList extends Component {
                       }}
                     >
                       <Link to={`/invoice/edit/${invoice.invoiceId}`}>
-                        <AiOutlineEdit size={24} style={{ color: "black" }} />
+                        <AiOutlineEdit size={20} style={{ color: "black" }} />
                       </Link>
                       <Link to={`/invoice/payment/${invoice.invoiceId}`}>
                         <AiOutlinePayCircle
-                          size={24}
+                          size={20}
                           style={{ color: "black" }}
                         />
                       </Link>
                       <AiOutlineDelete
-                        size={24}
+                        size={20}
                         onClick={() => handleDelete(invoice.invoiceId)}
                         role="button"
                       />

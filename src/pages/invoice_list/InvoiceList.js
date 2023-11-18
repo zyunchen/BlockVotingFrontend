@@ -118,7 +118,11 @@ class InvoiceList extends Component {
                   <TableCell align="right">
                     {invoice.productDescription}
                   </TableCell>
-                  <TableCell align="right">{invoice.customer.name}</TableCell>
+                  {invoice.customer == null ? (
+                    <TableCell align="right">Unknown</TableCell>
+                  ) : (
+                    <TableCell align="right">{invoice.customer.name}</TableCell>
+                  )}
                   <TableCell align="right">{invoice.quantity}</TableCell>
                   <TableCell align="right">{invoice.price}</TableCell>
                   {/* <TableCell align="right">{Math.round(invoice.price * invoice.quantity)}</TableCell> */}
@@ -128,7 +132,6 @@ class InvoiceList extends Component {
                   <TableCell align="right">
                     {this.getUTCDate(invoice.modificationDate)}
                   </TableCell>
-
                   <TableCell align="right">{invoice.dueDate}</TableCell>
                   <TableCell align="right">{invoice.paidAmount}</TableCell>
                   <TableCell align="right">{invoice.status}</TableCell>

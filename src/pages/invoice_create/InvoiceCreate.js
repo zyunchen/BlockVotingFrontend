@@ -115,24 +115,6 @@ class InvoiceCreate extends Component {
     }));
   };
 
-  onCreateCustomerClick = () => {
-    const { customerId, name, email } = this.state.customer_Details;
-
-    const customerData = {
-      customerId,
-      name,
-      email,
-    };
-
-    console.log(customerData);
-
-    this.props.createCustomer(customerData);
-
-    setTimeout(() => {
-      this.getCustomers();
-    }, 100);
-  };
-
   getCustomers() {
     // 发送网络请求
     axios
@@ -174,8 +156,10 @@ class InvoiceCreate extends Component {
 
     this.props.createCustomer(customerData);
 
-    this.getCustomers();
-    this.onCloseModal();
+    setTimeout(() => {
+      this.getCustomers();
+      this.onCloseModal();
+    }, 100);
   };
 
   componentDidMount() {
@@ -200,39 +184,45 @@ class InvoiceCreate extends Component {
           <Col md="6">
             <h3>Create Invoice</h3>
             <Form>
-              <FormGroup as={Row} className="mb-3" controlId="productDescription">
+              <FormGroup
+                as={Row}
+                className="mb-3"
+                controlId="productDescription"
+              >
                 <FormLabel column>Product Description</FormLabel>
-              <Col md ="9">
-                <FormControl
-                  type="text"
-                  name="productDescription"
-                  value={this.state.invoice_Details.productDescription}
-                  onChange={this.onChangeInvoice}
-                />
-              </Col>
+                <Col md="9">
+                  <FormControl
+                    type="text"
+                    name="productDescription"
+                    value={this.state.invoice_Details.productDescription}
+                    onChange={this.onChangeInvoice}
+                  />
+                </Col>
               </FormGroup>
 
               <FormGroup as={Row} className="mb-3" controlId="quantity">
                 <FormLabel column>Quantity</FormLabel>
-                <Col md ="9">
-                <FormControl
-                  type="number"
-                  name="quantity"
-                  value={this.state.invoice_Details.quantity}
-                  onChange={this.onChangeInvoice}
-                />
+                <Col md="9">
+                  <FormControl
+                    type="number"
+                    name="quantity"
+                    value={this.state.invoice_Details.quantity}
+                    onChange={this.onChangeInvoice}
+                  />
                 </Col>
               </FormGroup>
 
               <FormGroup as={Row} className="mb-3" controlId="price">
-                <FormLabel column algin="right">Price</FormLabel>
-                <Col md ="9">
-                <FormControl
-                  type="number"
-                  name="price"
-                  value={this.state.invoice_Details.price}
-                  onChange={this.onChangeInvoice}
-                />
+                <FormLabel column algin="right">
+                  Price
+                </FormLabel>
+                <Col md="9">
+                  <FormControl
+                    type="number"
+                    name="price"
+                    value={this.state.invoice_Details.price}
+                    onChange={this.onChangeInvoice}
+                  />
                 </Col>
               </FormGroup>
 
@@ -247,45 +237,45 @@ class InvoiceCreate extends Component {
               </FormGroup> */}
               <FormGroup as={Row} className="mb-3" controlId="dueDate">
                 <FormLabel column>dueDate</FormLabel>
-                <Col md ="9">
-                <DatePicker
-                  name="dueDate"
-                  selected={this.state.invoice_Details.dueDateObject}
-                  onChange={this.onChangeDueDate}
-                  dateFormat="yyyy-MM-dd"
-                  className="form-control"
-                />
+                <Col md="9">
+                  <DatePicker
+                    name="dueDate"
+                    selected={this.state.invoice_Details.dueDateObject}
+                    onChange={this.onChangeDueDate}
+                    dateFormat="yyyy-MM-dd"
+                    className="form-control"
+                  />
                 </Col>
               </FormGroup>
 
               {/* Assuming customerId is a dropdown */}
-              <FormGroup as={Row} className="mb-3"  controlId="customerId">
+              <FormGroup as={Row} className="mb-3" controlId="customerId">
                 <FormLabel column>Customer</FormLabel>
-                <Col md ="6">
-                <FormControl
-                  as="select"
-                  name="customerId"
-                  value={this.state.invoice_Details.customerId}
-                  onChange={this.onChangeInvoice}
-                >
-                  {this.state.customers.map((customer) => (
-                    <option
-                      key={customer.customerId}
-                      value={customer.customerId}
-                    >
-                      {customer.name} {customer.email}
-                    </option>
-                  ))}
-                </FormControl>
+                <Col md="6">
+                  <FormControl
+                    as="select"
+                    name="customerId"
+                    value={this.state.invoice_Details.customerId}
+                    onChange={this.onChangeInvoice}
+                  >
+                    {this.state.customers.map((customer) => (
+                      <option
+                        key={customer.customerId}
+                        value={customer.customerId}
+                      >
+                        {customer.name} {customer.email}
+                      </option>
+                    ))}
+                  </FormControl>
                 </Col>
-                <Col md ="3" className="d-flex">
-                <Button
-                  variant="outline-primary"
-                  onClick={this.onOpenModal}
-                  style={{ marginLeft: "auto" }}
-                >
-                  Add Customer
-                </Button>
+                <Col md="3" className="d-flex">
+                  <Button
+                    variant="outline-primary"
+                    onClick={this.onOpenModal}
+                    style={{ marginLeft: "auto" }}
+                  >
+                    Add Customer
+                  </Button>
                 </Col>
               </FormGroup>
               <Row>
@@ -305,54 +295,57 @@ class InvoiceCreate extends Component {
                   onClose={this.onCloseModal}
                   center
                   classNames={{
-                    overlay: 'custom-overlay',
-                    modal: 'custom-modal',
+                    overlay: "custom-overlay",
+                    modal: "custom-modal",
                   }}
-
                 >
-                  <div style={{ textAlign: 'center', padding: '20px', width: '500px', backgroundColor: '#fff', borderRadius: '8px' }}>
+                  <div
+                    style={{
+                      textAlign: "center",
+                      padding: "20px",
+                      width: "500px",
+                      backgroundColor: "#fff",
+                      borderRadius: "8px",
+                    }}
+                  >
                     <h5>Add a New Customer</h5>
-                    <Row>
-                    </Row>
-                    <Row>
-                    </Row>
-                    <Row>
-                    </Row>
+                    <Row></Row>
+                    <Row></Row>
+                    <Row></Row>
                     <Form>
-                      <FormGroup as={Row}controlId="customerName">
+                      <FormGroup as={Row} controlId="customerName">
                         <FormLabel column>Customer Name</FormLabel>
                         <Col md="8">
-                        <FormControl
-                          type="text"
-                          name="name"
-                          value={this.state.customer_Details.name}
-                          onChange={this.onChangeCustomer}
-                        />
+                          <FormControl
+                            type="text"
+                            name="name"
+                            value={this.state.customer_Details.name}
+                            onChange={this.onChangeCustomer}
+                          />
                         </Col>
                       </FormGroup>
                       <FormGroup as={Row} controlId="customerEmail">
                         <FormLabel column>Customer Email</FormLabel>
                         <Col md="8">
-                        <FormControl
-                          type="text"
-                          name="email"
-                          value={this.state.customer_Details.email}
-                          onChange={this.onChangeCustomer}
-                        />
+                          <FormControl
+                            type="text"
+                            name="email"
+                            value={this.state.customer_Details.email}
+                            onChange={this.onChangeCustomer}
+                          />
                         </Col>
                       </FormGroup>
                       <Row>
-                      <Button
-                        variant="primary"
-                        onClick={this.onCreateCustomerClick}
-                      >
-                        Create Customer
-                      </Button>
+                        <Button
+                          variant="primary"
+                          onClick={this.onCreateCustomerClick}
+                        >
+                          Create Customer
+                        </Button>
                       </Row>
                     </Form>
                   </div>
                 </Modal>
-
               </Box>
             </Form>
           </Col>
